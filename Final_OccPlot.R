@@ -13,7 +13,6 @@ plot_data <- getDomainOccurrence(Combined_FL_SEFCRI, "EPI ITAJ") %>%
   mutate(
     SE = sqrt(var),
     YEAR = as.numeric(as.character(YEAR)),
-
     Point_Type = case_when(
       REGION == "SEFCRI" ~ "SEFCRI",
       REGION == "Florida" & YEAR %in% c(2001, 2002, 2003, 2020) ~ "Florida (Partial)",
@@ -34,7 +33,7 @@ ggplot(plot_data, aes(x = YEAR, y = occurrence, group = REGION)) +
                 width = 0.25, linewidth = 0.5, color = "black", position = pd) +
 
   # 3. Draw the points LAST so they sit on top of the error bars
-  # Using fill = "white" ensures hollow shapes block the lines behind them!
+  # Using fill = "white" ensures shape 21 looks open and blocks the lines behind it
   geom_point(aes(shape = Point_Type), size = 3, color = "black", fill = "white", position = pd) +
 
   theme_bw(base_size = 12) +
@@ -45,21 +44,17 @@ ggplot(plot_data, aes(x = YEAR, y = occurrence, group = REGION)) +
     labels = c("Florida" = "Florida Keys &  Dry Tortugas", "SEFCRI" = "Southeast Florida")
   ) +
 
-  # 21 = Filled Circle, 22 = Filled Square
-  # Because fill="white" is set in geom_point, SEFCRI becomes a true hollow-looking circle
-  # while blocking background lines. (Change 22 to 15 if you want a solid black square!)
+  # Updated Shape Mappings
   scale_shape_manual(values = c(
     "Florida (Combined)" = 16, # Solid circle naturally ignores fill
-    "Florida (Partial)" = 15,  # Solid square naturally ignores fill
-    "SEFCRI" = 21              # Circle with white fill (looks hollow, blocks lines)
+    "Florida (Partial)" = 21,  # Circle with white fill (looks hollow/open, blocks lines)
+    "SEFCRI" = 16              # Solid circle naturally ignores fill
   )) +
 
   guides(shape = "none") +
 
-  labs(
-    title = "Goliath Grouper ",
-    x = "Year",
-    y = "Occurrence",
+  labs(y = "Occurrence",
+       x = NULL,
     linetype = NULL
   ) +
 
@@ -68,4 +63,5 @@ ggplot(plot_data, aes(x = YEAR, y = occurrence, group = REGION)) +
     axis.text.x = element_text(angle = 45, hjust = 1),
     legend.position = "bottom",
     legend.key.width = unit(2, "cm"),
-    legend.background = element_rect(color = "black", linewidth = 0.5))
+    legend.background = element_rect(color = "black", linewidth = 0.5)
+  )
