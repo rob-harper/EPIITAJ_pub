@@ -3,6 +3,7 @@ library(rvc)
 library(dplyr)
 library(tidyverse)
 library(gt)
+library(purrr)
 
 
 Florida_AllYears <- readRDS("Florida_AllYears.rds")

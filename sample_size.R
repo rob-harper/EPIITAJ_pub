@@ -2,34 +2,53 @@ library(dplyr)
 library(tidyr)
 library(gt)
 
-# 1. Prepare the data by counting unique PSUs
-table_data <- Combined_FL_SEFCRI$sample_data %>%
-  # Note: We removed the species filter here so you get the true total
-  # number of PSUs surveyed that year, not just the ones with Goliaths.
-  group_by(YEAR, REGION) %>%
+# 1. Prepare the data by counting unique PSUs for each specific sub-region
+table_data_raw <- Combined_FL_SEFCRI$sample_data %>%
+  # Fallback to REGION if ORIG_REGION is missing (which is likely true for SEFCRI)
+  mutate(
+    ORIG = coalesce(ORIG_REGION, REGION),
+    # Standardize names so we can pivot cleanly
+    ORIG = case_when(
+      grepl("KEYS", toupper(ORIG)) ~ "Keys",
+      grepl("TORT", toupper(ORIG)) ~ "Tortugas",
+      TRUE ~ "SEFCRI"
+    )
+  ) %>%
+  group_by(YEAR, ORIG) %>%
   summarize(Sample_Size = n_distinct(PRIMARY_SAMPLE_UNIT), .groups = "drop") %>%
 
-  # Pivot the data (we removed values_fill = 0 so missing years become NA)
-  pivot_wider(names_from = REGION, values_from = Sample_Size) %>%
-
-  # Ensure years are sorted chronologically
+  # Pivot into separate columns for Keys, Tortugas, and SEFCRI
+  pivot_wider(names_from = ORIG, values_from = Sample_Size) %>%
   arrange(as.numeric(as.character(YEAR))) %>%
-
-  # Convert YEAR to character so it can hold the word "Total"
   mutate(YEAR = as.character(YEAR))
 
-# -- NEW: Append the Total row directly to the dataframe --
-table_data <- table_data %>%
+# 2. Append the Total row using the raw numeric columns
+table_data_raw <- table_data_raw %>%
   bind_rows(
     tibble(
       YEAR = "Total",
-      Florida = sum(table_data$Florida, na.rm = TRUE),
-      SEFCRI = sum(table_data$SEFCRI, na.rm = TRUE)
+      Keys = sum(table_data_raw$Keys, na.rm = TRUE),
+      Tortugas = sum(table_data_raw$Tortugas, na.rm = TRUE),
+      SEFCRI = sum(table_data_raw$SEFCRI, na.rm = TRUE)
     )
   )
 
-# 2. Create the table with lines and blanks
-pub_table <- table_data %>%
+# 3. Format the Florida column with the "Keys / Tortugas" slash format
+table_data_final <- table_data_raw %>%
+  mutate(
+    # If both are NA (no Florida surveys that year), leave it NA so gt() makes it blank.
+    # Otherwise, paste them together, substituting 0 if one region wasn't surveyed but the other was.
+    Florida = if_else(
+      is.na(Keys) & is.na(Tortugas),
+      NA_character_,
+      paste0(replace_na(Keys, 0), " / ", replace_na(Tortugas, 0))
+    )
+  ) %>%
+  # Keep only the columns we want to display
+  select(YEAR, Florida, SEFCRI)
+
+# 4. Create the formatted table
+pub_table <- table_data_final %>%
   gt() %>%
 
   tab_header(
@@ -38,7 +57,7 @@ pub_table <- table_data %>%
 
   cols_label(
     YEAR = "Year",
-    Florida = "Florida Keys & Dry Tortugas",
+    Florida = "Florida Keys / Dry Tortugas",
     SEFCRI = "Southeast Florida"
   ) %>%
 
@@ -53,19 +72,17 @@ pub_table <- table_data %>%
     missing_text = ""
   ) %>%
 
-  # Turn on table lines
   opt_table_lines("all") %>%
 
-  # -- NEW: Style the manually added "Total" row --
+  # Style the manually added "Total" row
   tab_style(
     style = list(
       cell_text(weight = "bold"),
-      cell_fill(color = "gray95") # Optional: Light gray background for the total row
+      cell_fill(color = "gray95")
     ),
     locations = cells_body(rows = YEAR == "Total")
   ) %>%
 
-  # Keep the bold top/bottom borders for a clean look
   tab_options(
     table.border.top.color = "black",
     table.border.top.width = px(2),

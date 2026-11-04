@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+    <idinfo>
+        <citation>
+            <citeinfo>
+                <origin/>
+                <pubdate>20210511</pubdate>
+                <title>Kristin Jacobs Coral Reef Ecosystem Conversation Area</title>
+                <geoform>vector digital data</geoform>
+                <onlink>https://publicfiles.dep.state.fl.us/otis/gis/data/KJ_CORAL_REEF_ECA.zip</onlink>
+            </citeinfo>
+        </citation>
+        <descript>
+            <abstract>This dataset represents state owned waters of the Kristin Jacobs Coral Reef Ecosystem Conservation Area (ECA) boundary. The ECA extends from the Mean High Water Line (western boundary) to state water limits (three nautical miles – eastern boundary), and from the St. Lucie Inlet in Martin County (northern boundary) to the northern border of Biscayne National Park in Miami-Dade County (southern boundary). As described in the F.S. Ch. 253 Sec. 90(https://www.flsenate.gov/Laws/Statutes/2020/253.90).</abstract>
+            <purpose>Created from the Florida state submerged lands data layer to represent the Southeast Florida Coral Reef Ecosystem Conservation Area (ECA), established in July 2018 through the passing of 253.90, F.S.</purpose>
+        </descript>
+        <timeperd>
+            <timeinfo>
+                <sngdate>
+                    <caldate>20210511</caldate>
+                </sngdate>
+            </timeinfo>
+            <current>Date data was added in the GIS library</current>
+        </timeperd>
+        <spdom>
+            <bounding>
+                <westbc>-80.215368</westbc>
+                <eastbc>-79.958826</eastbc>
+                <northbc>27.177274</northbc>
+                <southbc>25.641345</southbc>
+            </bounding>
+        </spdom>
+        <keywords>
+            <theme>
+                <themekt>None</themekt>
+                <themekey>southeast Florida coral reef ecosystem conservation area, submerged lands, oceans, boundaries, oceans, Southeast Florida Coral Reef Initiative, Admin, Municipal and Political Boundaries, Biology and Ecology, Planning and Development, Kristin Jacobs</themekey>
+            </theme>
+            <theme>
+                <themekt>ISO 19115 Topic Categories</themekt>
+                <themekey>environment</themekey>
+            </theme>
+        </keywords>
+        <accconst>None</accconst>
+        <useconst>Intended for illustrative purposes only. Boundaries depicted are approximate and should not be considered authoritative for regulatory, engineering or legal determinations. Data is provided without warranty of any kind and FDEP shall not be held liable for damages of any kind including loss of anticipated profits or benefits arising out of use of or reliance on these data.</useconst>
+        <ptcontac>
+            <cntinfo>
+                <cntorgp>
+                    <cntorg>FDEP, Office of Resilience and Coastal Planning</cntorg>
+                    <cntper>Earl Pearson</cntper>
+                </cntorgp>
+                <cntpos>Planner IV</cntpos>
+                <cntaddr>
+                    <addrtype>mailing and physical</addrtype>
+                    <address>3900 Commonwealth Blvd</address>
+                    <city>Tallahassee</city>
+                    <state>FL</state>
+                    <postal>32303</postal>
+                    <country>US</country>
+                </cntaddr>
+                <cntvoice>850-245-2014</cntvoice>
+                <cntemail>Ear.Pearson@dep.state.fl.us</cntemail>
+            </cntinfo>
+        </ptcontac>
+        <datacred>Florida Department of Environmental Protection, Office of Resilience and Coastal Protection, Coral Reef Conservation Program</datacred>
+        <native> Version 6.2 (Build 9200) ; Esri ArcGIS 10.6.1.9270</native>
+    </idinfo>
+    <dataqual>
+        <lineage>
+            <procstep>
+                <procdesc>Prepare the data for publishing.</procdesc>
+                <procdate>20210413</procdate>
+                <proccont>
+                    <cntinfo>
+                        <cntorgp>
+                            <cntorg>FDEP, Office of Resilience and Coastal Planning</cntorg>
+                            <cntper>Earl Pearson</cntper>
+                        </cntorgp>
+                        <cntpos>Planner IV</cntpos>
+                        <cntaddr>
+                            <addrtype>mailing and physical</addrtype>
+                            <address>3900 Commonwealth Blvd</address>
+                            <city>Tallahassee</city>
+                            <state>FL</state>
+                            <postal>32303</postal>
+                            <country>US</country>
+                        </cntaddr>
+                        <cntvoice>850-245-2014</cntvoice>
+                        <cntemail>Ear.Pearson@dep.state.fl.us</cntemail>
+                    </cntinfo>
+                </proccont>
+            </procstep>
+            <procstep>
+                <procdesc>Date data was added to the GIS Library.</procdesc>
+                <procdate>20210511</procdate>
+                <proccont>
+                    <cntinfo>
+                        <cntorgp>
+                            <cntorg>Florida Department of Environmental Protection (FDEP) OTIS</cntorg>
+                        </cntorgp>
+                        <cntaddr>
+                            <addrtype>mailing and physical</addrtype>
+                            <address>2600 Blair Stone Rd</address>
+                            <city>Tallahassee</city>
+                            <state>FL</state>
+                            <postal>32399</postal>
+                        </cntaddr>
+                        <cntemail>GIS.Librarian@FloridaDEP.gov</cntemail>
+                    </cntinfo>
+                </proccont>
+            </procstep>
+        </lineage>
+    </dataqual>
+    <spdoinfo>
+        <direct>Vector</direct>
+        <ptvctinf>
+            <sdtsterm>
+                <sdtstype>GT-polygon composed of chains</sdtstype>
+                <ptvctcnt>1</ptvctcnt>
+            </sdtsterm>
+        </ptvctinf>
+    </spdoinfo>
+    <eainfo>
+        <detailed>
+            <enttyp>
+                <enttypl>KJ_CORAL_REEF_ECA</enttypl>
+            </enttyp>
+            <attr>
+                <attrlabl>OBJECTID</attrlabl>
+                <attrdef>Internal feature number.</attrdef>
+                <attrdefs>Esri</attrdefs>
+                <attrdomv>
+                                        
+                    
+                    <udom>Sequential unique whole numbers that are automatically generated.</udom>
+                                        
+                
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>Shape</attrlabl>
+                <attrdef>Feature geometry.</attrdef>
+                <attrdefs>Esri</attrdefs>
+                <attrdomv>
+                                        
+                    
+                    <udom>Coordinates defining the features.</udom>
+                                        
+                
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>NAME</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>WEBSITE_LINK</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>SHAPE.AREA</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>SHAPE.LEN</attrlabl>
+            </attr>
+        </detailed>
+    </eainfo>
+    <metainfo>
+        <metd>20240220</metd>
+        <metc>
+            <cntinfo>
+                <cntorgp>
+                    <cntorg>Florida Department of Environmental Protection (FDEP) OTIS/GIS Section</cntorg>
+                </cntorgp>
+                <cntaddr>
+                    <addrtype>mailing and physical</addrtype>
+                    <address>2600 Blair Stone Rd</address>
+                    <city>Tallahassee</city>
+                    <state>FL</state>
+                    <postal>32399</postal>
+                </cntaddr>
+                <cntemail>GIS.Librarian@FloridaDEP.gov</cntemail>
+            </cntinfo>
+        </metc>
+        <metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+        <metstdv>FGDC-STD-001-1998</metstdv>
+        <mettc>local time</mettc>
+    </metainfo>
+</metadata>

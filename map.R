@@ -1,24 +1,15 @@
-library(dplyr)
 
-site_summary_with_year <- Florida_AllYears$sample_data %>%
-  group_by(YEAR, PRIMARY_SAMPLE_UNIT) %>% summarise(LAT = mean(LAT_DEGREES), LON = mean(LON_DEGREES))%>%
+combined_summary <- bind_rows(
+  SEFCRI_AllYears$sample_data,
+  Florida_AllYears$sample_data
+) %>%
+  group_by(YEAR, PRIMARY_SAMPLE_UNIT) %>%
   summarise(
-
+    LAT = mean(LAT_DEGREES, na.rm = TRUE),
+    LON = mean(LON_DEGREES, na.rm = TRUE),
     GOLIATH_COUNT = ceiling(sum(NUM[SPECIES_CD == "EPI ITAJ"], na.rm = TRUE)),
     .groups = "drop"
   )
 
-# Export to CSV for ArcGIS Pro
-write.csv(site_summary_with_year, "Goliath_Grouper_Counts_WithYear.csv", row.names = FALSE)
+write.csv(combined_summary, "combined_goliath_summary.csv", row.names = FALSE)
 
-
-sefcri_summary <- SEFCRI_AllYears$sample_data %>%
-  group_by(YEAR, PRIMARY_SAMPLE_UNIT, STATION_NR, LAT_DEGREES, LON_DEGREES) %>%
-  summarise(
-
-    GOLIATH_COUNT = ceiling(sum(NUM[SPECIES_CD == "EPI ITAJ"], na.rm = TRUE)),
-    .groups = "drop"
-  )
-
-# Export the SEFCRI-specific CSV for ArcGIS Pro
-write.csv(sefcri_summary, "Goliath_Grouper_Counts_SEFCRI.csv", row.names = FALSE)

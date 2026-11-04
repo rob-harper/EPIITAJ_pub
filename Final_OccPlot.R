@@ -1,7 +1,6 @@
 library(ggplot2)
 library(dplyr)
 library(rvc)
-
 Combined_FL_SEFCRI <- list(
   sample_data = bind_rows(Florida_AllYears$sample_data, SEFCRI_AllYears$sample_data),
   stratum_data = bind_rows(Florida_AllYears$stratum_data, SEFCRI_AllYears$stratum_data),
@@ -13,10 +12,13 @@ plot_data <- getDomainOccurrence(Combined_FL_SEFCRI, "EPI ITAJ") %>%
   mutate(
     SE = sqrt(var),
     YEAR = as.numeric(as.character(YEAR)),
-    Point_Type = case_when(
-      REGION == "SEFCRI" ~ "SEFCRI",
-      REGION == "Florida" & YEAR %in% c(2001, 2002, 2003, 2020) ~ "Florida (Partial)",
-      TRUE ~ "Florida (Combined)"
+
+    # -- NEW: Replicate the fill logic. Applies custom colors to Florida,
+    # and leaves SEFCRI (and normal Florida years) as standard black --
+    point_fill = case_when(
+      REGION == "Florida" & YEAR %in% c(2001, 2002, 2003, 2005, 2007, 2009, 2011) ~ "white",
+      REGION == "Florida" & YEAR == 2020 ~ "gray",
+      TRUE ~ "black"
     )
   )
 
@@ -33,8 +35,11 @@ ggplot(plot_data, aes(x = YEAR, y = occurrence, group = REGION)) +
                 width = 0.25, linewidth = 0.5, color = "black", position = pd) +
 
   # 3. Draw the points LAST so they sit on top of the error bars
-  # Using fill = "white" ensures shape 21 looks open and blocks the lines behind it
-  geom_point(aes(shape = Point_Type), size = 3, color = "black", fill = "white", position = pd) +
+  # -- CHANGED: Use shape 21 for all points and map fill to point_fill --
+  geom_point(aes(fill = point_fill), shape = 21, size = 3, color = "black", position = pd) +
+
+  # -- NEW: Tells ggplot to interpret "white", "gray", and "black" as exact colors --
+  scale_fill_identity() +
 
   theme_bw(base_size = 12) +
   scale_x_continuous(breaks = min(plot_data$YEAR):max(plot_data$YEAR)) +
@@ -44,18 +49,9 @@ ggplot(plot_data, aes(x = YEAR, y = occurrence, group = REGION)) +
     labels = c("Florida" = "Florida Keys &  Dry Tortugas", "SEFCRI" = "Southeast Florida")
   ) +
 
-  # Updated Shape Mappings
-  scale_shape_manual(values = c(
-    "Florida (Combined)" = 16, # Solid circle naturally ignores fill
-    "Florida (Partial)" = 21,  # Circle with white fill (looks hollow/open, blocks lines)
-    "SEFCRI" = 16              # Solid circle naturally ignores fill
-  )) +
-
-  guides(shape = "none") +
-
   labs(y = "Occurrence",
        x = NULL,
-    linetype = NULL
+       linetype = NULL
   ) +
 
   theme(
